@@ -1,33 +1,31 @@
-🌎 Список бесплатных прокси от free-proxy
+🌎 Liste des proxys gratuits de free-proxy
 
-Каждые 5 минут free-proxy выбирает новые прокси—серверы, включая прокси HTTP, SOCKS4 и SOCKS5, со всего Интернета.
+Toutes les 5 minutes, le proxy gratuit sélectionne de nouveaux serveurs proxy, notamment les proxys HTTP, SOCKS4 et SOCKS5, sur Internet.
 
+Dans la dernière mise à jour, free-proxy a trouvé plus de 156 000 proxys fonctionnels dans plus de 120 pays.
 
-В последнем обновлении free-proxy обнаружил 156 000+ работающих прокси из 120+ стран.
+🦄 Caractéristiques :
 
+⚡ Extrêmement rapide
 
-🦄 Характеристики:
+📝 Vérifié toutes les 5 minutes
 
-⚡ Чрезвычайно быстрый
+🌎 Contient plus de 120 pays
 
-📝 Проверяется каждые 5 минут
+📓 Trié par TOUS, HTTP, SOCKS4 et SOCKS5
 
-🌎 Содержит 120+ стран
+📦 Disponible en .txt
 
-📓 Отсортирован по ALL, HTTP, SOCKS4 и SOCKS5
+🔐 Prend en charge la connexion HTTPS
 
-📦 Доступно в .txt
+😊 Pas de doublons
 
-🔐 Поддерживает HTTPS-соединение
+🛑 Veuillez suivre la politique d'utilisation acceptable de GitHub. Vous devez utiliser ces proxys de manière responsable, sans en abuser ni avoir l'intention de commettre des activités illégales.
 
-😊 Отсутствие дубликатов
+Utiliser 📦
 
-🛑 Пожалуйста, следуйте Политике приемлемого использования GitHub. Вы должны использовать эти прокси ответственно, не злоупотребляя ими и без намерения совершить незаконную деятельность.
+Il existe de nombreuses façons d'obtenir nos proxys gratuits.
 
-Использование 📦
+Vous pouvez simplement télécharger la liste complète sous forme de fichier .txt.
 
-Существует так много способов получить наши бесплатные прокси.
-
-Вы можете просто загрузить весь список в виде .txt файла.
-
-free-proxy сортирует прокси по протоколу, но вы также можете просто получить весь несортированный список.
+free-proxy trie les proxys par protocole, mais vous pouvez également obtenir la liste complète non triée.
