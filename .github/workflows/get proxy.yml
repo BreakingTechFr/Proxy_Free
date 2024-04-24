@@ -24,8 +24,8 @@ jobs:
           
       - name: Pull files
         run: |
-          git config --local user.email "lnikolai228@gmail.com"
-          git config --local user.name "Vadim287"
+          git config --local user.email "breakingtechfr@gmail.com"
+          git config --local user.name "BreakingTechFr"
           git pull origin main
       
       - name: Get proxies
