@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo content
-        uses: actions/checkout@v4  # Mise à jour vers la version compatible avec Node.js 20
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
           fetch-depth: 0
@@ -40,7 +40,7 @@ jobs:
           git commit -m "Update Proxies (`date '+%F %H:%M %Z'`)" -a
           
       - name: Push changes
-        uses: ad-m/github-push-action@master  # Utiliser une version compatible avec Node.js 20
+        uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
