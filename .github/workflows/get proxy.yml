@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout repo content
         uses: actions/checkout@v4  # Mise à jour vers la version compatible avec Node.js 20
+        with:
+          persist-credentials: false
+          fetch-depth: 0
     
       - name: Setup Python
         uses: actions/setup-python@v3  # Mettre à jour vers la version compatible avec Node.js 20
@@ -35,10 +38,9 @@ jobs:
         run: |
           git add -A
           git commit -m "Update Proxies (`date '+%F %H:%M %Z'`)" -a
-          git branch -u origin/main
           
       - name: Push changes
-        uses: ad-m/github-push-action@v0.9.0  # Utiliser une version compatible avec Node.js 20
+        uses: ad-m/github-push-action@master  # Utiliser une version compatible avec Node.js 20
         with:
-          github_token: ${{ secrets.TOKEN_GITHUB }}
-          branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
