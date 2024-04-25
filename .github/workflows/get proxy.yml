@@ -2,7 +2,7 @@ name: Get Proxy
 
 on:
   schedule:
-  - cron: '*/5 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
   
 jobs:
@@ -38,7 +38,7 @@ jobs:
           git branch -u origin/main
           
       - name: Push changes
-        uses: ad-m/github-push-action@v1
+        uses: ad-m/github-push-action@v2
         with:
           github_token: ${{ secrets.TOKEN_GITHUB }}
           branch: main
