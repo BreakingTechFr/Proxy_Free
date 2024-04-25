@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
     
       - name: Setup Python
-        uses: actions/setup-python@v3.2.0  # Mettre à jour vers la version compatible avec Node.js 20
+        uses: actions/setup-python@v3  # Utiliser la dernière version disponible compatible avec Node.js 20
         with:
           python-version: '3.10'
           
