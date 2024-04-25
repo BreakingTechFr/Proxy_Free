@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo content
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Mise à jour vers la version compatible avec Node.js 20
     
       - name: Setup python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v3  # Garder la version 3 car elle est déjà compatible avec Node.js 20
         with:
           python-version: '3.10'
           
@@ -38,7 +38,7 @@ jobs:
           git branch -u origin/main
           
       - name: Push changes
-        uses: ad-m/github-push-action@v0.7.0
+        uses: ad-m/github-push-action@v2  # Mise à jour vers la version compatible avec Node.js 20
         with:
           github_token: ${{ secrets.TOKEN_GITHUB }}
           branch: main
