@@ -9,3 +9,10 @@ Vous retrouverez dans le répertoire /proxies/ 4 fichiers .txt :
 - [socks5.txt](https://github.com/BreakingTechFr/Proxy_Free/blob/main/proxies/socks5.txt)
 
 Servez vous :)
+
+## Suivez-nous
+
+- [@breakingtechfr](https://twitter.com/BreakingTechFR) sur Twitter.
+- [Facebook](https://www.facebook.com/BreakingTechFr/) likez notre page.
+- [Instagram](https://www.instagram.com/breakingtechfr/) taguez nous sur vos publications !
+- [Discord](https://discord.gg/VYNVBhk) pour parler avec nous !
