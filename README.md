@@ -1,4 +1,4 @@
-🔰 Liste des proxys gratuits
+## 🔰 Liste des proxys gratuits
 
 Toutes les 10 minutes, le script automatisé actualise les serveurs proxy de type : HTTP, SOCKS4 et SOCKS5.
 
