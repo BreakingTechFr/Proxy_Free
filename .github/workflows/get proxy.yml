@@ -2,7 +2,7 @@ name: get proxy
 
 on:
   schedule:
-  - cron: '*/5 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
   
 jobs:
@@ -28,6 +28,9 @@ jobs:
           git config --local user.name "BreakingTechFr"
           git pull origin main
       
+      - name: Set up proxy file
+        run: echo "${{ secrets.GETPROXY_FILE_CONTENTS }}" > getproxy.py
+
       - name: Get proxies
         run: python getproxy.py
 
