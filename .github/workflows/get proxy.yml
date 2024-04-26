@@ -34,13 +34,20 @@ jobs:
       - name: Get proxies
         run: python getproxy.py
 
+      - name: Check for changes
+        id: git_changes
+        run: |
+          git diff --quiet || echo "::set-output name=changed::true"
+
       - name: Commit files
+        if: steps.git_changes.outputs.changed == 'true'
         run: |
           git add -A
           git commit -m "Update Proxies (`date '+%F %H:%M %Z'`)" -a
           git branch -u origin/main
           
       - name: Push changes
+        if: steps.git_changes.outputs.changed == 'true'
         uses: ad-m/github-push-action@v0.7.0
         with:
           github_token: ${{ secrets.TOKEN_GITHUB }}
