@@ -3,7 +3,7 @@ import datetime
 import requests
 import re
 import time
-from requests.exceptions import ConnectionError, HTTPError
+from requests.exceptions import ConnectionError, HTTPError, ReadTimeout
 
 class DownloadProxies:
     def __init__(self) -> None:
@@ -82,8 +82,9 @@ class DownloadProxies:
                         self.proxy_list += re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{2,5}', self.r.text)
                         self.proxy_dict[type] += list(set(self.proxy_list))
                         print('> Get {} {} ips from {}'.format(len(self.proxy_list), type, api))
-                except:
-                    pass
+                except (ConnectionError, HTTPError, ReadTimeout) as e:
+                    print(f"Request failed: {e}")
+                    continue
 
         print('> Get {} proxies done'.format(type))
 
@@ -114,12 +115,13 @@ class DownloadProxies:
                     print('> Get {} http proxy ips from {}'.format(self.count['http'], self.r.url))
                     print('> Get {} socks5 proxy ips from {}'.format(self.count['socks5'], self.r.url))
                     break
-                except (ConnectionError, HTTPError) as e:
+                except (ConnectionError, HTTPError, ReadTimeout) as e:
                     print(f"Tentative {i + 1} échouée: {e}")
                     if i < retries - 1:
                         time.sleep(5)
                     else:
-                        raise
+                        print(f"Abandon de la requête après {retries} tentatives échouées.")
+                        break
 
         self.proxy_dict['socks4'] = list(set(self.proxy_dict['socks4']))
         self.proxy_dict['socks5'] = list(set(self.proxy_dict['socks5']))
