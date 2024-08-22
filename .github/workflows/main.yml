@@ -26,7 +26,7 @@ jobs:
 
     - name: Run the proxy download script
       run: |
-        python getproxy.py.py
+        python getproxy.py
 
     - name: Save proxies as artifacts
       uses: actions/upload-artifact@v3
