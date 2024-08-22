@@ -77,7 +77,7 @@ class DownloadProxies:
             for api in self.api[type]:
                 self.proxy_list = []
                 try_count = 0
-                while try_count < 2:
+                while try_count < 2:  # Limite les tentatives à 2
                     try:
                         self.r = requests.get(api, timeout=5)
                         if self.r.status_code == requests.codes.ok:
@@ -100,7 +100,8 @@ class DownloadProxies:
             self.count = {'http': 0, 'socks5': 0}
             self.day = datetime.date.today() + datetime.timedelta(-q)
             url = 'https://checkerproxy.net/api/archive/{}-{}-{}'.format(self.day.year, self.day.month, self.day.day)
-            for i in range(retries):
+            try_count = 0
+            while try_count < 2:  # Limite les tentatives à 2 pour get_extra
                 try:
                     self.r = requests.get(url, timeout=10)
                     self.r.raise_for_status()
@@ -122,11 +123,13 @@ class DownloadProxies:
                     print('> Get {} socks5 proxy ips from {}'.format(self.count['socks5'], self.r.url))
                     break
                 except (ConnectionError, HTTPError) as e:
-                    print(f"Tentative {i + 1} échouée: {e}")
-                    if i < retries - 1:
+                    try_count += 1
+                    print(f"Tentative {try_count} échouée pour {url}: {e}")
+                    if try_count < 2:
                         time.sleep(5)
                     else:
-                        raise
+                        print(f"Passage à l'URL suivante après {try_count} tentatives échouées pour {url}.")
+                        break
 
         self.proxy_dict['socks4'] = list(set(self.proxy_dict['socks4']))
         self.proxy_dict['socks5'] = list(set(self.proxy_dict['socks5']))
