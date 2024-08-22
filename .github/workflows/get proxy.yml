@@ -32,10 +32,10 @@ jobs:
         run: python getproxy.py
 
       - name: Commit and push changes
-        uses: github-actions-x/commit@v4
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          github_token: ${{ secrets.TOKEN_GITHUB }}
-          author_name: "BreakingTechFR"
-          author_email: "breakingtechfr@gmail.com"
-          message: "Update Proxies ---->"
+          commit_message: "Update Proxies ---->"
           branch: main
+          commit_user_name: "BreakingTechFR"
+          commit_user_email: "breakingtechfr@gmail.com"
+          git_commit_flags: --no-verify
