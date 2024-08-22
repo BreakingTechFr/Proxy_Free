@@ -29,7 +29,9 @@ jobs:
           git pull origin main
       
       - name: Get proxies
-        run: python getproxy.py
+        run: |
+          python getproxy.py || exit 1
+          echo "Script executed successfully."
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
