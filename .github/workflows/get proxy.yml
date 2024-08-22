@@ -2,7 +2,7 @@ name: get proxy
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Exécution toutes les 5 minutes
+    - cron: '*/30 * * * *'  # Exécution toutes les 30 minutes
   workflow_dispatch:  # Permet d'exécuter manuellement le workflow
 
 jobs:
