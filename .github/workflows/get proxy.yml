@@ -2,22 +2,23 @@ name: get proxy
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-  workflow_dispatch:
-  
+    - cron: '*/5 * * * *'  # Exécution toutes les 5 minutes
+  workflow_dispatch:  # Permet d'exécuter manuellement le workflow
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout repo content
-        uses: actions/checkout@v3
-    
-      - name: Setup python
-        uses: actions/setup-python@v3
+        uses: actions/checkout@v3  # Utilisation de la version stable et à jour
+        
+      - name: Setup Python
+        uses: actions/setup-python@v4  # Mise à jour vers la version v4
         with:
           python-version: '3.10'
           
-      - name: Install python packages
+      - name: Install Python packages
         run: |
           python -m pip install --upgrade pip
           pip install requests
@@ -29,15 +30,16 @@ jobs:
           git pull origin main
       
       - name: Get proxies
-        run: |
-          python getproxy.py || exit 1
-          echo "Script executed successfully."
+        run: python getproxy.py
 
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Commit files
+        run: |
+          git add -A
+          git commit -m "Update Proxies ---->" -a || echo "No changes to commit"
+          git branch -u origin/main
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.7.0
         with:
-          commit_message: "Update Proxies ---->"
+          github_token: ${{ secrets.TOKEN_GITHUB }}
           branch: main
-          commit_user_name: "BreakingTechFR"
-          commit_user_email: "breakingtechfr@gmail.com"
-          git_commit_flags: --no-verify
