@@ -3,7 +3,7 @@ import datetime
 import requests
 import re
 import time
-from requests.exceptions import ConnectionError, HTTPError, ReadTimeout
+from requests.exceptions import ConnectionError, HTTPError
 
 class DownloadProxies:
     def __init__(self) -> None:
@@ -76,17 +76,23 @@ class DownloadProxies:
         for type in ['socks4', 'socks5', 'http']:
             for api in self.api[type]:
                 self.proxy_list = []
-                try:
-                    self.r = requests.get(api, timeout=5)
-                    if self.r.status_code == requests.codes.ok:
-                        self.proxy_list += re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{2,5}', self.r.text)
-                        self.proxy_dict[type] += list(set(self.proxy_list))
-                        print('> Get {} {} ips from {}'.format(len(self.proxy_list), type, api))
-                except (ConnectionError, HTTPError, ReadTimeout) as e:
-                    print(f"Request failed: {e}")
-                    continue
-
-        print('> Get {} proxies done'.format(type))
+                try_count = 0
+                while try_count < 2:
+                    try:
+                        self.r = requests.get(api, timeout=5)
+                        if self.r.status_code == requests.codes.ok:
+                            self.proxy_list += re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{2,5}', self.r.text)
+                            self.proxy_dict[type] += list(set(self.proxy_list))
+                            print('> Get {} {} ips from {}'.format(len(self.proxy_list), type, api))
+                            break  # Sortie de la boucle après une tentative réussie
+                    except (ConnectionError, HTTPError) as e:
+                        try_count += 1
+                        print(f"Tentative {try_count} échouée pour {api}: {e}")
+                        if try_count < 2:
+                            time.sleep(5)
+                        else:
+                            print(f"Passage à l'URL suivante après {try_count} tentatives échouées pour {api}.")
+                print('> Get {} proxies done'.format(type))
 
     def get_extra(self):
         retries = 5
@@ -115,13 +121,12 @@ class DownloadProxies:
                     print('> Get {} http proxy ips from {}'.format(self.count['http'], self.r.url))
                     print('> Get {} socks5 proxy ips from {}'.format(self.count['socks5'], self.r.url))
                     break
-                except (ConnectionError, HTTPError, ReadTimeout) as e:
+                except (ConnectionError, HTTPError) as e:
                     print(f"Tentative {i + 1} échouée: {e}")
                     if i < retries - 1:
                         time.sleep(5)
                     else:
-                        print(f"Abandon de la requête après {retries} tentatives échouées.")
-                        break
+                        raise
 
         self.proxy_dict['socks4'] = list(set(self.proxy_dict['socks4']))
         self.proxy_dict['socks5'] = list(set(self.proxy_dict['socks5']))
