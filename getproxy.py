@@ -3,7 +3,7 @@ import datetime
 import requests
 import re
 import time
-from requests.exceptions import ConnectionError, HTTPError
+from requests.exceptions import ConnectionError, HTTPError, RequestException
 
 class DownloadProxies:
     def __init__(self) -> None:
@@ -77,7 +77,7 @@ class DownloadProxies:
             for api in self.api[type]:
                 self.proxy_list = []
                 try_count = 0
-                while try_count < 2:  # Limite les tentatives à 2
+                while try_count < 2:
                     try:
                         self.r = requests.get(api, timeout=5)
                         if self.r.status_code == requests.codes.ok:
@@ -101,9 +101,15 @@ class DownloadProxies:
             self.day = datetime.date.today() + datetime.timedelta(-q)
             url = 'https://checkerproxy.net/api/archive/{}-{}-{}'.format(self.day.year, self.day.month, self.day.day)
             try_count = 0
-            while try_count < 2:  # Limite les tentatives à 2 pour get_extra
+            while try_count < retries:  # Limite les tentatives de récupération à 5
                 try:
-                    self.r = requests.get(url, timeout=10)
+                    # Vérifier la disponibilité de l'API
+                    response = requests.head(url, timeout=10)
+                    if response.status_code != 200:
+                        raise RequestException(f"API non disponible, statut: {response.status_code}")
+
+                    # Faire la requête principale si l'API est disponible
+                    self.r = requests.get(url, timeout=30)  # Augmenter le timeout à 30 secondes
                     self.r.raise_for_status()
                     self.json_result = json.loads(self.r.text)
                     for i in self.json_result:
@@ -125,11 +131,13 @@ class DownloadProxies:
                 except (ConnectionError, HTTPError) as e:
                     try_count += 1
                     print(f"Tentative {try_count} échouée pour {url}: {e}")
-                    if try_count < 2:
-                        time.sleep(5)
+                    if try_count < retries:
+                        time.sleep(5)  # Attendre avant de réessayer
                     else:
-                        print(f"Passage à l'URL suivante après {try_count} tentatives échouées pour {url}.")
-                        break
+                        print(f"Passage à la date suivante après {try_count} tentatives échouées pour {url}.")
+                except RequestException as e:
+                    print(f"Erreur lors de la vérification de l'API: {e}")
+                    break
 
         self.proxy_dict['socks4'] = list(set(self.proxy_dict['socks4']))
         self.proxy_dict['socks5'] = list(set(self.proxy_dict['socks5']))
